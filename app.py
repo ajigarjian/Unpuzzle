@@ -16,7 +16,7 @@ def index():
 
 
     rows = []
-    for row in cursor.execute("SELECT * FROM general"):
+    for row in cursor.execute("SELECT * FROM general LIMIT 100"):
         rows.append(row)
     return render_template("index.html", rows=rows)
 

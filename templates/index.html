@@ -5,18 +5,18 @@
 {% endblock %}
 
 {% block main %}
-    <table id="home_table">
-        <thead>
-            <tr class = "home_row">
+    <table class="table_wrap searchable sortable">
+        <thead class="table_header"></thead>
+            <tr class = "header_row">
                 <th>Date</th>
                 <th>Clues</th>
                 <th>Answers</th>
                 <th>Day</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table_body"></tbody>
                 {% for row in rows %}
-                    <tr class="home_row">
+                    <tr class="body_row">
                         <td> {{ row[1] }}  </td>
                         <td> {{ row[2] }}  </td>
                         <td> {{ row[3] }}  </td>
