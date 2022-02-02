@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block main %}
+    <table id="home_table">
+        <thead>
+            <tr class = "home_row">
+                <th>Date</th>
+                <th>Clues</th>
+                <th>Answers</th>
+                <th>Day</th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for row in rows %}
+                    <tr class="home_row">
+                        <td> {{ row['clue'] }}  </td>
+    
+                    </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

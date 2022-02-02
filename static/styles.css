@@ -1,0 +1,11 @@
+/* Size for brand */
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+nav .navbar-brand
+{
+    font-size: xx-large;
+}
