@@ -25,6 +25,11 @@ nav .navbar-brand
     font-family: 'cheltenhamregular';
 }
 
+#one_header {
+    color: black;
+    background: white;
+}
+
 .table_wrap
 {
     width: 1000px;
