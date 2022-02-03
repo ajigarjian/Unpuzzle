@@ -3,4 +3,5 @@ document.addEventListener("click", myFunction);
 
 function myFunction() {
   document.getElementById("one_header").style.color = "red";
+  document.getElementById("demo").innerHTML = "Brandon's gay";
 }

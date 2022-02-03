@@ -6,28 +6,31 @@
 
 {% block main %}
     
-    <!-- Table to show general table in pairs.db. Has a styling class for the entire table, the head, the body, and each row -->
-    <table class="table_wrap">
-        <thead class="table_header"></thead>
-            <tr class = "header_row">
-                <!-- The headers are the four columns -->
-                <th>Date</th>
-                <th>Clues</th>
-                <th>Answers</th>
-                <th>Day</th>
-            </tr>
-        </thead>
-        <tbody class="table_body"></tbody>
-                <!-- from app.py, intakes rows as a list of lists from general table. Displays 2nd through 5th element each in their own cell -->
-                {% for row in rows %}
-                    <tr class="body_row">
-                        <td> {{ row[1] }}  </td>
-                        <td> {{ row[2] }}  </td>
-                        <td> {{ row[3] }}  </td>
-                        <td> {{ row[4] }}  </td>
-                    </tr>
-                {% endfor %}
-        </tbody>
-    </table>
+    <!-- Table to show general table in pairs.db. Wraps table in a div for boostrap table-responsive styling. Then has a styling class for the entire table, the head, the body, and each row -->
+    <p id="demo">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-dark">
+                    <!-- The headers are the four columns -->
+                    <th>Date</th>
+                    <th>Clues</th>
+                    <th>Answers</th>
+                    <th>Day</th>
+                </tr>
+            </thead>
+            <tbody class="table_body">
+                    <!-- from app.py, intakes rows as a list of lists from general table. Displays 2nd through 5th element each in their own cell -->
+                    {% for row in rows %}
+                        <tr class="body_row">
+                            <td> {{ row[1] }}  </td>
+                            <td> {{ row[2] }}  </td>
+                            <td> {{ row[3] }}  </td>
+                            <td> {{ row[4] }}  </td>
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 
