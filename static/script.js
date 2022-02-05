@@ -23,7 +23,6 @@ document.querySelector("#ans_search").addEventListener('keyup', function(e){
 //Similar function but for dates
 document.querySelector("#date_start").addEventListener("change", function() {
     var input = new Date(this.value);
-    document.getElementById("demo").innerHTML = input;
     const dates = document.querySelectorAll(".table_body .body_row .table_dates");
 
     for (let i = 0; i < dates.length; i++) {
