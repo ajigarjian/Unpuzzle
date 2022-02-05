@@ -6,7 +6,6 @@
          url('/static/chelt-font/cheltenham-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
 body {
@@ -28,6 +27,12 @@ nav .navbar-brand
 #one_header {
     color: black;
     background: white;
+}
+
+legend {
+    font-size: 16px;
+    text-align: left;
+    margin: 0px;
 }
 
 .table

@@ -6,12 +6,30 @@
 
 {% block main %}
     
+
+<div class=" table_search_wrapper ">
+    <form>
+        <div class="d-flex input-group input-daterange date_search_fields justify-content-sm-around">
+            <div id="date_search_1_wrapper">
+                <legend>Date</legend>
+                    <input type="date" id="date_start" class="form-control" placeholder="Date">
+            </div>
+            <div id="ans_search_wrapper">
+                <legend>Word Search</legend>
+                <input type="text" id="ans_search" class="form-control">
+            </div>
+        </div>
+    </form>
+</div>
+    
+<p id="demo">
+<p id="demo2">
+<p id="demo3">   
     <!-- Table to show general table in pairs.db. Wraps table in a div for boostrap table-responsive styling. Then has a styling class for the entire table, the head, the body, and each row -->
-    <p id="demo">
     <div class="table-responsive">
-        <table class="table table-hover">
+        <table id ="home_table" class="table table-hover">
             <thead>
-                <tr class="table-dark">
+                <tr class="table-dark"> 
                     <!-- The headers are the four columns -->
                     <th>Date</th>
                     <th>Clues</th>
@@ -23,10 +41,10 @@
                     <!-- from app.py, intakes rows as a list of lists from general table. Displays 2nd through 5th element each in their own cell -->
                     {% for row in rows %}
                         <tr class="body_row">
-                            <td> {{ row[1] }}  </td>
-                            <td> {{ row[2] }}  </td>
-                            <td> {{ row[3] }}  </td>
-                            <td> {{ row[4] }}  </td>
+                            <td class="table_dates"> {{ row[1] }}  </td>
+                            <td class="table_clues"> {{ row[2] }}  </td>
+                            <td class="table_answers"> {{ row[3] }}  </td>
+                            <td class="table_days"> {{ row[4] }}  </td>
                         </tr>
                     {% endfor %}
             </tbody>

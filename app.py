@@ -14,7 +14,7 @@ cursor = db.cursor()
 def index():
     """Show home page of 1Across"""
     rows = []
-    for row in cursor.execute("SELECT * FROM general LIMIT 100"):
+    for row in cursor.execute("SELECT * FROM general LIMIT 1000"):
         rows.append(row)
     return render_template("index.html", rows=rows)
 
