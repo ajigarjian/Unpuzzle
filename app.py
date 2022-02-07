@@ -29,7 +29,7 @@ def database():
 
     if request.method == "POST":
 
-        answer = request.form.get("answer")
+        answer = (request.form.get("answer")).upper()
         print(answer)
 
         rows = []
