@@ -14,9 +14,15 @@ cursor = db.cursor()
 def index():
     """Show home page of 1Across"""
     rows = []
-    for row in cursor.execute("SELECT * FROM general LIMIT 1000"):
+    for row in cursor.execute("SELECT * FROM general LIMIT 100"):
         rows.append(row)
     return render_template("index.html", rows=rows)
+
+@app.route("/modules")
+def modules():
+    """Show modules page of 1Across"""
+
+    return render_template("modules.html")
 
 #syntax to run app.py
 if __name__ == "__main__":
