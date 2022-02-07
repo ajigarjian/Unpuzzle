@@ -1,9 +1,14 @@
 # importing necessary frameworks and libraries 
-from flask import Flask, render_template
+import os
+from datetime import date
+from flask import Flask, render_template, redirect, request
 import sqlite3
 
 # Configure application
 app = Flask(__name__)
+
+# Ensure templates are auto-reloaded
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Connect to SQLite database pairs.db and initialize cursor based on connection
 db = sqlite3.connect('pairs.db', check_same_thread=False)
@@ -18,11 +23,22 @@ def index():
         rows.append(row)
     return render_template("index.html", rows=rows)
 
-@app.route("/modules")
-def modules():
-    """Show modules page of 1Across"""
+@app.route("/database", methods=['GET', 'POST'])
+def database():
+    """Show database page of 1Across"""
 
-    return render_template("modules.html")
+    if request.method == "POST":
+
+        answer = request.form.get("answer")
+        print(answer)
+
+        rows = []
+        for row in cursor.execute("SELECT * FROM general WHERE answer = ?", [answer]):
+            rows.append(row)
+        return render_template("databased.html", rows=rows)
+
+    else:
+        return render_template("database.html")
 
 #syntax to run app.py
 if __name__ == "__main__":

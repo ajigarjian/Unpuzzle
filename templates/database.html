@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Database
+{% endblock %}
+
+{% block main %}
+<div class=" table_search_wrapper ">
+    <form action="/database" method="post">
+        <div class="d-flex input-group input-daterange date_search_fields justify-content-sm-around">
+            <div id="date_search_1_wrapper">
+                <legend>Start Date</legend>
+                    <input type="date" id="date_start_db" name="start_date" class="form-control" placeholder="Date">
+            </div>
+            <div id="date_search_2_wrapper">
+                <legend>End Date</legend>
+                    <input type="date" id="date_end_db" name="end_date" class="form-control" placeholder="Date">
+            </div>
+            <div id="ans_search_wrapper">
+                <legend>Clue Keywords</legend>
+                <input type="text" id="clue_search_db" name="clue" class="form-control">
+            </div>
+            <div id="ans_search_wrapper">
+                <legend>Term Keywords</legend>
+                <input type="text" id="ans_search_db" name="answer" class="form-control">
+            </div>
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
