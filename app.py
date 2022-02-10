@@ -71,7 +71,7 @@ def database():
         #     rows.append(row)
         
         # if not answer:
-        for row in cursor.execute("SELECT * FROM general WHERE date BETWEEN ? AND ?", (start, end)):
+        for row in cursor.execute("SELECT * FROM general WHERE date BETWEEN date(?) AND date(?) ORDER BY date LIMIT 100", [start, end]):
             rows.append(row)
 
         # else:
