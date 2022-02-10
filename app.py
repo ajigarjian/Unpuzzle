@@ -40,11 +40,8 @@ def database():
         if not end:
             end = "2100-01-01"
 
-        formatted_start = start
-        formatted_end = end
-
-        print(formatted_start)
-        print(formatted_end)
+        formatted_start = ""
+        formatted_end = ""
 
         if int(start[8:10]) > 9:
             if int(start[5:7]) > 9:
@@ -67,28 +64,15 @@ def database():
                 formatted_end = end[5:7] + "/" + end[9:10] + "/" + end[0:2]
             else:
                 formatted_end = end[6:7] + "/" + end[9:10] + "/" + end[0:2]
-        
-
-        print(answer)
-        print(clue)
-        print(start)
-        print(end)
-        print(int(start[8:10]) == 12)
-        print(formatted_start)
-        print(formatted_end)
-        print(type(formatted_start))
-        print(type(formatted_end))
-
-
-
 
         rows = []
-        for row in cursor.execute("SELECT * FROM general WHERE answer = ?", [answer]):
-            rows.append(row)
+
+        # for row in cursor.execute("SELECT * FROM general WHERE answer = ?", [answer]):
+        #     rows.append(row)
         
         # if not answer:
-        #     for row in cursor.execute("SELECT * FROM general WHERE date >= ? AND date <= ?", (formatted_start, formatted_end)):
-        #         rows.append(row)
+        for row in cursor.execute("SELECT * FROM general WHERE date BETWEEN ? AND ?", (start, end)):
+            rows.append(row)
 
         # else:
         #     for row in cursor.execute("SELECT * FROM general WHERE answer = ? AND date >= ? AND date <= ?", (answer, formatted_start, formatted_end)):
