@@ -40,10 +40,44 @@ def database():
         if not end:
             end = "2100-01-01"
 
+        formatted_start = start
+        formatted_end = end
+
+        print(formatted_start)
+        print(formatted_end)
+
+        if int(start[8:10]) > 9:
+            if int(start[5:7]) > 9:
+                formatted_start = start[5:7] + "/" + start[8:10] + "/" + start[0:2]
+            else:
+                formatted_start = start[6:7] + "/" + start[8:10] + "/" + start[0:2]
+        else:
+            if int(start[5:7]) > 9:
+                formatted_start = start[5:7] + "/" + start[9:10] + "/" + start[0:2]
+            else:
+                formatted_start = start[6:7] + "/" + start[9:10] + "/" + start[0:2]
+
+        if int(end[8:10]) > 9:
+            if int(end[5:7]) > 9:
+                formatted_end = end[5:7] + "/" + end[8:10] + "/" + end[0:2]
+            else:
+                formatted_end = end[6:7] + "/" + end[8:10] + "/" + end[0:2]
+        else:
+            if int(end[5:7]) > 9:
+                formatted_end = end[5:7] + "/" + end[9:10] + "/" + end[0:2]
+            else:
+                formatted_end = end[6:7] + "/" + end[9:10] + "/" + end[0:2]
+        
+
         print(answer)
         print(clue)
         print(start)
         print(end)
+        print(int(start[8:10]) == 12)
+        print(formatted_start)
+        print(formatted_end)
+        print(type(formatted_start))
+        print(type(formatted_end))
 
 
 
