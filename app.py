@@ -30,11 +30,36 @@ def database():
     if request.method == "POST":
 
         answer = (request.form.get("answer")).upper()
+        clue = (request.form.get("clue")).upper()
+        start = request.form.get("start_date")
+        end = request.form.get("end_date")
+
+        if not start:
+            start = "1900-01-01"
+        
+        if not end:
+            end = "2100-01-01"
+
         print(answer)
+        print(clue)
+        print(start)
+        print(end)
+
+
+
 
         rows = []
         for row in cursor.execute("SELECT * FROM general WHERE answer = ?", [answer]):
             rows.append(row)
+        
+        # if not answer:
+        #     for row in cursor.execute("SELECT * FROM general WHERE date >= ? AND date <= ?", (formatted_start, formatted_end)):
+        #         rows.append(row)
+
+        # else:
+        #     for row in cursor.execute("SELECT * FROM general WHERE answer = ? AND date >= ? AND date <= ?", (answer, formatted_start, formatted_end)):
+        #         rows.append(row)
+
         return render_template("databased.html", rows=rows)
 
     else:
