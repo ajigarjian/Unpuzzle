@@ -34,6 +34,10 @@ def database():
         start = request.form.get("start_date")
         end = request.form.get("end_date")
 
+        if not answer:
+            answer = ''
+
+        # Date formatting
         if not start:
             start = "1900-01-01"
         
@@ -65,9 +69,18 @@ def database():
             else:
                 formatted_end = end[6:7] + "/" + end[9:10] + "/" + end[0:2]
 
+
+        # ------------ Search queries ---------------
         rows = []
 
-        for row in cursor.execute("SELECT * FROM general WHERE answer = ?", [answer]):
+        # for row in cursor.execute("SELECT * FROM general WHERE answer = ?", [answer]):
+        #     rows.append(row)
+
+        #  # 2/12 attempt at clue search
+        # for row in cursor.execute("SELECT * FROM general WHERE clue LIKE ?", ["%" + clue + "%"]): 
+        #     rows.append(row)
+
+        for row in cursor.execute("SELECT * FROM general WHERE answer = COALESCE(NULLIF(?, ''), answer) AND clue LIKE COALESCE(NULLIF(?, ''), clue) LIMIT 1000", [answer, '%' + clue + '%']):
             rows.append(row)
         
         #this is the latest working trial of date search
@@ -75,17 +88,7 @@ def database():
         # for row in cursor.execute("SELECT * FROM general WHERE date BETWEEN date(?) AND date(?) ORDER BY date LIMIT 100", [start, end]):
         #    rows.append(row)
 
-        print(clue)
-
-        # 2/12 attempt at clue search
-        for row in cursor.execute("SELECT * FROM general WHERE clue LIKE ?", ["%" + clue + "%"]): 
-            rows.append(row)
-
-        # else:
-        #     for row in cursor.execute("SELECT * FROM general WHERE answer = ? AND date >= ? AND date <= ?", (answer, formatted_start, formatted_end)):
-        #         rows.append(row)
-
-        return render_template("databased.html", rows=rows)
+        return render_template("databased.html", rows=rows, clue_placeholder = clue, answer_placeholder = answer)
 
     else:
         return render_template("database.html")
