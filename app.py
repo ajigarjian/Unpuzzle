@@ -37,6 +37,9 @@ def database():
         if not answer:
             answer = ''
 
+        if not clue:
+            clue = ''
+
         # Date formatting
         if not start:
             start = "1900-01-01"
@@ -72,13 +75,6 @@ def database():
 
         # ------------ Search queries ---------------
         rows = []
-
-        # for row in cursor.execute("SELECT * FROM general WHERE answer = ?", [answer]):
-        #     rows.append(row)
-
-        #  # 2/12 attempt at clue search
-        # for row in cursor.execute("SELECT * FROM general WHERE clue LIKE ?", ["%" + clue + "%"]): 
-        #     rows.append(row)
 
         for row in cursor.execute("SELECT * FROM general WHERE answer = COALESCE(NULLIF(?, ''), answer) AND clue LIKE COALESCE(NULLIF(?, ''), clue) LIMIT 1000", [answer, '%' + clue + '%']):
             rows.append(row)
