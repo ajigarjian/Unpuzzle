@@ -64,6 +64,9 @@ def database():
         # for row in cursor.execute("SELECT * FROM general WHERE date BETWEEN ? AND ? ORDER BY date LIMIT 1000", [formatted_start, formatted_end]):
         #    rows.append(row)
 
+        #TO DO: add footer in table in html, and have it return X results akin to Google using jinja syntrax in html and count in python
+        #TO DO: fix date clause in main SQL query
+
         return render_template("databased.html", rows=rows, clue_placeholder = clue, answer_placeholder = answer)
 
     else:
