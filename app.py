@@ -47,41 +47,21 @@ def database():
         if not end:
             end = "2100-01-01"
 
-        formatted_start = ""
-        formatted_end = ""
-
-        if int(start[8:10]) > 9:
-            if int(start[5:7]) > 9:
-                formatted_start = start[5:7] + "/" + start[8:10] + "/" + start[0:2]
-            else:
-                formatted_start = start[6:7] + "/" + start[8:10] + "/" + start[0:2]
-        else:
-            if int(start[5:7]) > 9:
-                formatted_start = start[5:7] + "/" + start[9:10] + "/" + start[0:2]
-            else:
-                formatted_start = start[6:7] + "/" + start[9:10] + "/" + start[0:2]
-
-        if int(end[8:10]) > 9:
-            if int(end[5:7]) > 9:
-                formatted_end = end[5:7] + "/" + end[8:10] + "/" + end[0:2]
-            else:
-                formatted_end = end[6:7] + "/" + end[8:10] + "/" + end[0:2]
-        else:
-            if int(end[5:7]) > 9:
-                formatted_end = end[5:7] + "/" + end[9:10] + "/" + end[0:2]
-            else:
-                formatted_end = end[6:7] + "/" + end[9:10] + "/" + end[0:2]
-
+        #editing dates to format the db data
+        formatted_start = (start[0:4] + "-" + start[5:7].lstrip("0") + "-" + start[8:10].lstrip("0"))
+        formatted_end = (end[0:4] + "-" + end[5:7].lstrip("0") + "-" + end[8:10].lstrip("0"))
 
         # ------------ Search queries ---------------
         rows = []
 
-        for row in cursor.execute("SELECT * FROM general WHERE answer = COALESCE(NULLIF(?, ''), answer) AND clue LIKE COALESCE(NULLIF(?, ''), clue) LIMIT 1000", [answer, '%' + clue + '%']):
+        for row in cursor.execute("""SELECT * FROM general WHERE answer = COALESCE(NULLIF(?, ''), answer) 
+                                    AND clue LIKE COALESCE(NULLIF(?, ''), clue) 
+                                    AND date BETWEEN ? AND ? ORDER BY date
+                                    LIMIT 1000""", [answer, '%' + clue + '%', formatted_start, formatted_end]):
             rows.append(row)
         
-        #this is the latest working trial of date search
-        # if not answer:
-        # for row in cursor.execute("SELECT * FROM general WHERE date BETWEEN date(?) AND date(?) ORDER BY date LIMIT 100", [start, end]):
+        # this is the latest working trial of date search
+        # for row in cursor.execute("SELECT * FROM general WHERE date BETWEEN ? AND ? ORDER BY date LIMIT 1000", [formatted_start, formatted_end]):
         #    rows.append(row)
 
         return render_template("databased.html", rows=rows, clue_placeholder = clue, answer_placeholder = answer)
