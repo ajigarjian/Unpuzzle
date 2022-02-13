@@ -30,7 +30,7 @@ def database():
     if request.method == "POST":
 
         answer = (request.form.get("answer")).upper()
-        clue = (request.form.get("clue")).upper()
+        clue = (request.form.get("clue"))
         start = request.form.get("start_date")
         end = request.form.get("end_date")
 
@@ -67,11 +67,18 @@ def database():
 
         rows = []
 
-        # for row in cursor.execute("SELECT * FROM general WHERE answer = ?", [answer]):
-        #     rows.append(row)
+        for row in cursor.execute("SELECT * FROM general WHERE answer = ?", [answer]):
+            rows.append(row)
         
+        #this is the latest working trial of date search
         # if not answer:
-        for row in cursor.execute("SELECT * FROM general WHERE date BETWEEN date(?) AND date(?) ORDER BY date LIMIT 100", [start, end]):
+        # for row in cursor.execute("SELECT * FROM general WHERE date BETWEEN date(?) AND date(?) ORDER BY date LIMIT 100", [start, end]):
+        #    rows.append(row)
+
+        print(clue)
+
+        # 2/12 attempt at clue search
+        for row in cursor.execute("SELECT * FROM general WHERE clue LIKE ?", ["%" + clue + "%"]): 
             rows.append(row)
 
         # else:
