@@ -51,12 +51,15 @@ def database():
         formatted_start = (start[0:4] + "-" + start[5:7].lstrip("0") + "-" + start[8:10].lstrip("0"))
         formatted_end = (end[0:4] + "-" + end[5:7].lstrip("0") + "-" + end[8:10].lstrip("0"))
 
+        print(formatted_start)
+        print(formatted_end)
+
         # ------------ Search queries ---------------
         rows = []
 
         for row in cursor.execute("""SELECT * FROM general WHERE answer = COALESCE(NULLIF(?, ''), answer) 
                                     AND clue LIKE COALESCE(NULLIF(?, ''), clue) 
-                                    AND date BETWEEN ? AND ? ORDER BY date
+                                    AND date >= ? AND date <= ? ORDER BY date
                                     LIMIT 1000""", [answer, '%' + clue + '%', formatted_start, formatted_end]):
             rows.append(row)
         
@@ -67,7 +70,7 @@ def database():
         #TO DO: add footer in table in html, and have it return X results akin to Google using jinja syntrax in html and count in python
         #TO DO: fix date clause in main SQL query
 
-        return render_template("databased.html", rows=rows, clue_placeholder = clue, answer_placeholder = answer)
+        return render_template("databased.html", rows = rows, count = len(rows), clue_placeholder = clue, answer_placeholder = answer)
 
     else:
         return render_template("database.html")
