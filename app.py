@@ -53,51 +53,35 @@ def database():
         if not days_checked:
             days_checked= DAYS
 
-        print(days_checked)
-
         #editing dates to format the db data
         formatted_start = (start[0:4] + "-" + start[5:7].lstrip("0") + "-" + start[8:10].lstrip("0"))
         formatted_end = (end[0:4] + "-" + end[5:7].lstrip("0") + "-" + end[8:10].lstrip("0"))
 
         # ------------ Search queries ---------------
+
+        # Create string of dynamic length of ?s, e.g. if 3 checkboxes are selected for weekdays, the string is "?, ?, ?"
+        placeholders= ', '.join('?' * len(days_checked))
+
+        # add days we're checking for into a new list plus the other parameters we're checking for. These are all the ? values"
+        parameters = []
+        for value in days_checked:
+            parameters.append(value)
+        parameters.extend((answer, '%' + clue + '%', formatted_start, formatted_end))
+
+        #main query
+        query = """SELECT * FROM general WHERE 
+                    weekday IN (%s)
+                    AND answer = COALESCE(NULLIF(?, ''), answer)
+                    AND clue LIKE COALESCE(NULLIF(?, ''), clue) 
+                    AND date >= ? AND date <= ?
+                    ORDER BY date
+                    LIMIT 1000""" % placeholders
+
         rows = []
 
-        placeholder= '?'
-        placeholders= ', '.join(placeholder * len(days_checked))
-        print(placeholders)
-
-        # #independent query for dates that works
-        # query = """SELECT * FROM general WHERE 
-        #             weekday IN (%s)
-        #             ORDER BY date
-        #             LIMIT 1000""" % placeholders
-
-        # for row in cursor.execute(query, days_checked):
-        #     rows.append(row)
-
-        # trial for combined search
-        qm = "?"
-
-        query = """SELECT * FROM general WHERE 
-                    answer = COALESCE(NULLIF(%s, ''), answer) 
-                    AND clue LIKE COALESCE(NULLIF(%s, ''), clue) 
-                    AND date >= %s AND date <= %s
-                    AND weekday IN (%s)
-                    ORDER BY date
-                    LIMIT 1000""" % (qm, qm, qm, qm, placeholders)
-
-        for row in cursor.execute(query, [answer, '%' + clue + '%', formatted_start, formatted_end, days_checked]):
+        for row in cursor.execute(query, parameters):
             rows.append(row)
 
-        # #original search function that worked before
-        # for row in cursor.execute("""SELECT * FROM general WHERE answer = COALESCE(NULLIF(?, ''), answer) 
-        #                             AND clue LIKE COALESCE(NULLIF(?, ''), clue) 
-        #                             AND (date >= ? AND date <= ?) 
-        #                             ORDER BY date
-        #                             LIMIT 1000""", [answer, '%' + clue + '%', formatted_start, formatted_end]):
-        #     rows.append(row)
-        
-        #TO DO: add footer in table in html, and have it return X results akin to Google using jinja syntrax in html and count in python
         #TO DO: fix date clause in main SQL query
 
         return render_template("databased.html", rows = rows, count = len(rows), clue_placeholder = clue, answer_placeholder = answer, days = DAYS)
