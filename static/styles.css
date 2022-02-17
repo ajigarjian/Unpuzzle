@@ -35,8 +35,7 @@ legend {
     margin: 0px;
 }
 
-.table
-{
+.table {
     display: block;
     width: 1000px;
     height: 500px;
@@ -44,3 +43,6 @@ legend {
     overflow-y: scroll;
 }
 
+.search_wrapper {
+    padding-right: 12px;
+}
